@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   height: 5
-  weight: 5.5
+  weight: 10.5
   brand: BMW
   hasWindow: 1
 --- !u!65 &254718618

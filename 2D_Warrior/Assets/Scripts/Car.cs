@@ -8,9 +8,9 @@ public class Car : MonoBehaviour
 
     // 四大類型
     // 整數 int
-    // 浮點數 float
-    // 字串 string
-    // 布林值 bool
+    // 浮點數 float   小數點後面必須加上 f 或 F
+    // 字串 string    必須用雙引號 "" 包覆住
+    // 布林值 bool    是 true、否 false
 
     // 修飾詞
     // 私人：不會顯示 (預設) private
@@ -21,14 +21,17 @@ public class Car : MonoBehaviour
     // 欄位屬性
     // 語法
     // [屬性名稱("字串或對應的值")]
-    [Header("這是汽車的高度")]
+    // 標題 Header
+    // 提示 Tooltip
+    // 範圍 Range
+    [Header("高度")]
+    [Range(1, 10)]
     public int height = 5;
-    [Tooltip("這是汽車的重量，單位是噸。")]
+    [Header("重量"), Tooltip("這是汽車的重量，單位是噸。"), Range(2.5f, 10.5f)]
     public float weight = 5.5f;
-    [Header("這是汽車的品牌")]
+    [Header("品牌")]
     public string brand = "BMW";
-    [Header("這是汽車是否有天窗")]
+    [Header("否有天窗")]
     public bool hasWindow = true;
-    // 是 true
-    // 否 false
+    
 }
