@@ -162,6 +162,17 @@ MonoBehaviour:
   blue: {r: 0, g: 0, b: 1, a: 1}
   myColor2: {r: 0.5, g: 0.3, b: 0.1, a: 1}
   myColor3: {r: 0, g: 0.5, b: 0.8, a: 0.5}
+  v2Zero: {x: 0, y: 0}
+  v2One: {x: 1, y: 1}
+  v2A: {x: 9, y: 10}
+  v3A: {x: 1, y: 2, z: 3}
+  v4A: {x: 1, y: 2, z: 3, w: 4}
+  picture: {fileID: 0}
+  sound: {fileID: 0}
+  objA: {fileID: 0}
+  objB: {fileID: 0}
+  tra: {fileID: 0}
+  cam: {fileID: 0}
 --- !u!65 &254718618
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -434,3 +445,14 @@ MonoBehaviour:
   blue: {r: 0, g: 0, b: 1, a: 1}
   myColor2: {r: 0.5, g: 0.3, b: 0.1, a: 1}
   myColor3: {r: 0, g: 0.5, b: 0.8, a: 0.5}
+  v2Zero: {x: 0, y: 0}
+  v2One: {x: 1, y: 1}
+  v2A: {x: 9, y: 10}
+  v3A: {x: 1, y: 2, z: 3}
+  v4A: {x: 1, y: 2, z: 3, w: 4}
+  picture: {fileID: 21300000, guid: 32f0d177f88da4c48991a9984113aa0d, type: 3}
+  sound: {fileID: 8300000, guid: 6e8dcac482d339649b89d4fa3c8eedf6, type: 3}
+  objA: {fileID: 1516805312}
+  objB: {fileID: 5845062915197074727, guid: b887561d4e2a8c44dacae90223b1098c, type: 3}
+  tra: {fileID: 1949839025}
+  cam: {fileID: 1516805314}

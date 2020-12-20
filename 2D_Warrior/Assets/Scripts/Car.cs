@@ -49,4 +49,17 @@ public class Car : MonoBehaviour
 
     public Vector3 v3A = new Vector3(1, 2, 3);
     public Vector4 v4A = new Vector4(1, 2, 3, 4);
+
+    // 圖片與音效
+    public Sprite picture;
+    public AudioClip sound;
+
+    // 遊戲物件 與 元件
+    // 遊戲物件：儲存階層面板內的物件與預製物
+    public GameObject objA;
+    public GameObject objB;
+
+    // 元件：屬性面板上可摺疊的元件
+    public Transform tra;
+    public Camera cam;
 }
