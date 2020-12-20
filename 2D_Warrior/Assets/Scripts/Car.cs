@@ -33,5 +33,12 @@ public class Car : MonoBehaviour
     public string brand = "BMW";
     [Header("否有天窗")]
     public bool hasWindow = true;
-    
+
+    // 其他類型
+    // 顏色 Color
+    public Color myColor1;
+    public Color red = Color.red;
+    public Color blue = Color.blue;
+    public Color myColor2 = new Color(0.5f, 0.3f, 0.1f);
+    public Color myColor3 = new Color(0, 0.5f, 0.8f, 0.5f);
 }
