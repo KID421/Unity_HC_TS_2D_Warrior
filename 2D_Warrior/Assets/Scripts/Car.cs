@@ -41,4 +41,12 @@ public class Car : MonoBehaviour
     public Color blue = Color.blue;
     public Color myColor2 = new Color(0.5f, 0.3f, 0.1f);
     public Color myColor3 = new Color(0, 0.5f, 0.8f, 0.5f);
+
+    // 座標 向量 2 - 4
+    public Vector2 v2Zero = Vector2.zero;
+    public Vector2 v2One = Vector2.one;
+    public Vector2 v2A = new Vector2(9, 10);
+
+    public Vector3 v3A = new Vector3(1, 2, 3);
+    public Vector4 v4A = new Vector4(1, 2, 3, 4);
 }
