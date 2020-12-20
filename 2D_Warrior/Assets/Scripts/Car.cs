@@ -17,11 +17,18 @@ public class Car : MonoBehaviour
     // 公開：會顯示 public
 
     // 指定符號 =
-    public int height = 5;
-    public float weight = 5.5f;
-    public string brand = "BMW";
 
+    // 欄位屬性
+    // 語法
+    // [屬性名稱("字串或對應的值")]
+    [Header("這是汽車的高度")]
+    public int height = 5;
+    [Tooltip("這是汽車的重量，單位是噸。")]
+    public float weight = 5.5f;
+    [Header("這是汽車的品牌")]
+    public string brand = "BMW";
+    [Header("這是汽車是否有天窗")]
+    public bool hasWindow = true;
     // 是 true
     // 否 false
-    public bool hasWindow = true;       
 }
