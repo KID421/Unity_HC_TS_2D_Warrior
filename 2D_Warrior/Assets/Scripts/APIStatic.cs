@@ -62,5 +62,7 @@ public class APIStatic : MonoBehaviour
         // 練習區域：取得靜態屬性
         print("是否按下任意鍵：" + Input.anyKeyDown);
         // print("遊戲時間：" + Time.time);
+
+        print("是否按下空白鍵：" + Input.GetKeyDown("space"));
     }
 }
