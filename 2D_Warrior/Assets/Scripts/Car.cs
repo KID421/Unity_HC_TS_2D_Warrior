@@ -72,8 +72,8 @@ public class Car : MonoBehaviour
     // 修飾詞 類型 名稱 (指定 值)；
 
     // 方法語法
-    // 修飾詞 傳回類型 名稱 () { 程式區塊，陳述式，演算法 }
-    
+    // 修飾詞 傳回類型 名稱 (參數類型 參數名稱，參數類型 參數名稱，.....) { 程式區塊，陳述式，演算法 }
+
     // void 無傳回：呼叫此方法後不會傳回任何資料
     // 自訂方法
     // 不會執行，必須要呼叫才會執行
@@ -96,6 +96,39 @@ public class Car : MonoBehaviour
         return 1.5f;
     }
 
+    private string Name()
+    {
+        return "KID";
+    }
+
+    // 維護擴充性
+    private void DriveForward()
+    {
+        print("往前開");
+        print("開車音效");
+    }
+    private void DriveBack()
+    {
+        print("往後開");
+        print("開車音效");
+    }
+    private void DriveRight()
+    {
+        print("往右開");
+        print("開車音效");
+    }
+    private void DriveLeft()
+    {
+        print("往左開");
+        print("開車音效");
+    }
+
+    private void Drive(string direction)
+    {
+        print("開車方向：" + direction);
+        print("開車音效");
+    }
+
     #endregion
 
     // 名稱藍色：事件
@@ -103,6 +136,7 @@ public class Car : MonoBehaviour
     // 開始事件：遊戲開始時執行一次
     private void Start()
     {
+        #region 練習欄位取得與設定
         // 使用欄位
         // 取得 Get
         print("品牌：" + brand);
@@ -110,12 +144,26 @@ public class Car : MonoBehaviour
         // 設定 Set
         hasWindow = false;
         weight = 5.5f;
+        #endregion
 
         // 呼叫方法
         // 方法名稱()；
         Test();
 
+        // 傳回方法使用方式
+        // 1. 直接當作傳回類型資料使用
         print("傳回的整數：" + Ten());
         print("傳回的浮點數：" + OnePointFive());
+
+        // 2. 儲存在區域變數內
+        // 區域變數：在事件或方法內可使用的欄位
+        // 僅限於此括號內可使用
+        string myName = Name();
+        print(myName);
+
+        // 呼叫時輸入的 引數
+        Drive("後面");
+        Drive("前面");
+        Drive("左邊");
     }
 }
