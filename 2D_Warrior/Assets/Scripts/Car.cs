@@ -2,6 +2,7 @@
 
 public class Car : MonoBehaviour
 {
+    #region 練習欄位
     // 單行註解：不會被程式讀取
     // 欄位語法
     // 修飾詞 類型 名稱 (指定 值)；
@@ -63,4 +64,58 @@ public class Car : MonoBehaviour
     // 元件：屬性面板上可摺疊的元件
     public Transform tra;
     public Camera cam;
+    #endregion
+
+    #region 練習方法
+
+    // 欄位語法
+    // 修飾詞 類型 名稱 (指定 值)；
+
+    // 方法語法
+    // 修飾詞 傳回類型 名稱 () { 程式區塊，陳述式，演算法 }
+    
+    // void 無傳回：呼叫此方法後不會傳回任何資料
+    // 自訂方法
+    // 不會執行，必須要呼叫才會執行
+    private void Test()
+    {
+        // 輸出 方法
+        print("哈囉~");
+    }
+
+    // 傳回類型 int
+    // 必須傳回 整數資料
+    private int Ten()
+    {
+        // 傳回
+        return 10;
+    }
+
+    private float OnePointFive()
+    {
+        return 1.5f;
+    }
+
+    #endregion
+
+    // 名稱藍色：事件
+    // 在特定時間點會執行的方法
+    // 開始事件：遊戲開始時執行一次
+    private void Start()
+    {
+        // 使用欄位
+        // 取得 Get
+        print("品牌：" + brand);
+        print("高度：" + height);
+        // 設定 Set
+        hasWindow = false;
+        weight = 5.5f;
+
+        // 呼叫方法
+        // 方法名稱()；
+        Test();
+
+        print("傳回的整數：" + Ten());
+        print("傳回的浮點數：" + OnePointFive());
+    }
 }
