@@ -23,15 +23,46 @@ public class Player : MonoBehaviour
     private AudioSource aud;
     private Rigidbody2D rig;
     private Animator ani;
+    /// <summary>
+    /// 取得玩家水平軸向的值
+    /// </summary>
+    public float h;
     #endregion
 
+    private void Start()
+    {
+        // GetComponent<泛型>()
+        // 泛型：泛指所有類型
+        // GetComponent<Animator>()
+        // GetComponent<AudioSource>()
+
+        // 剛體欄位 = 取得元件<剛體>()
+        rig = GetComponent<Rigidbody2D>();
+    }
+
+    private void Update()
+    {
+        GetHorizontal();
+        Move();
+    }
+
     #region 方法
+    /// <summary>
+    /// 取得水平軸向
+    /// </summary>
+    private void GetHorizontal()
+    {
+        // 輸入.取得軸向("水平")
+        h = Input.GetAxis("Horizontal");
+    }
+
     /// <summary>
     /// 移動
     /// </summary>
     private void Move()
     {
-
+        // 剛體.加速度 = 二維(水平 * 速度，原本加速度的 Y)
+        rig.velocity = new Vector2(h * speed, rig.velocity.y);
     }
 
     /// <summary>
