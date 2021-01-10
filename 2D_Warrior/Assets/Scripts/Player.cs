@@ -38,12 +38,14 @@ public class Player : MonoBehaviour
 
         // 剛體欄位 = 取得元件<剛體>()
         rig = GetComponent<Rigidbody2D>();
+        ani = GetComponent<Animator>();
     }
 
     private void Update()
     {
         GetHorizontal();
         Move();
+        Jump();
     }
 
     #region 方法
@@ -63,6 +65,22 @@ public class Player : MonoBehaviour
     {
         // 剛體.加速度 = 二維(水平 * 速度，原本加速度的 Y)
         rig.velocity = new Vector2(h * speed, rig.velocity.y);
+
+        // 如果 玩家 按下 D 或者 右鍵 就執行 { 內容 }
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            // transform 指的與此腳本同一層的 Transform 元件
+            // Rotation 角度在程式是 localEulerAngles
+            transform.localEulerAngles = Vector3.zero;
+        }
+        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            transform.localEulerAngles = new Vector3(0, 180, 0);
+        }
+
+        // 動畫控制器.設定布林值(參數，布林值)
+        // 玩家按下左或右時 跑步 h != 0
+        ani.SetBool("跑步開關", h != 0);
     }
 
     /// <summary>
@@ -70,7 +88,14 @@ public class Player : MonoBehaviour
     /// </summary>
     private void Jump()
     {
-
+        // 如果 在地面上 並且 按下空白鍵 才可以 跳躍
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        {
+            rig.AddForce(new Vector2(0, jump));         // 剛體.添加推力(二維向量)
+            isGrounded = false;                         // 不在地面上
+        }
+        ani.SetBool("是否在地面上", isGrounded);
+        ani.SetFloat("跳躍", rig.velocity.y);
     }
 
     /// <summary>
