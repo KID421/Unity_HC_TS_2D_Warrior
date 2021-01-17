@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     public Vector3 offset;
     [Header("地面判定半徑")]
     public float radius = 0.3f;
+    [Header("鑰匙音效")]
+    public AudioClip soundKey;
 
     private AudioSource aud;
     private Rigidbody2D rig;
@@ -62,9 +64,6 @@ public class Player : MonoBehaviour
         // 圖示.繪製球體(中心點，半徑)
         Gizmos.DrawSphere(transform.position + offset, radius);
     }
-
-    [Header("鑰匙音效")]
-    public AudioClip soundKey;
 
     /// <summary>
     /// 觸發事件：Enter 進入時執行一次
