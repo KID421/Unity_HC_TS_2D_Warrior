@@ -158,10 +158,6 @@ public class Player : MonoBehaviour
             GameObject temp = Instantiate(bullet, pointSpawn.position, pointSpawn.rotation);
             // 暫存子彈.取得元件<剛體>().添加推力(生成點右邊 * 子彈速度 + 生成點上方 * 高度)
             temp.GetComponent<Rigidbody2D>().AddForce(pointSpawn.right * speedBullet + pointSpawn.up * 50);
-            ParticleSystem ps = temp.GetComponent<ParticleSystem>();
-            var main = ps.main;
-
-            main.startRotation = 180 / 180 * Mathf.PI;
         }
     }
 
