@@ -63,6 +63,9 @@ public class Player : MonoBehaviour
         Gizmos.DrawSphere(transform.position + offset, radius);
     }
 
+    [Header("鑰匙音效")]
+    public AudioClip soundKey;
+
     /// <summary>
     /// 觸發事件：Enter 進入時執行一次
     /// </summary>
@@ -74,6 +77,7 @@ public class Player : MonoBehaviour
         {
             // 刪除(一定要放 GameObject)
             Destroy(collision.gameObject);
+            aud.PlayOneShot(soundKey, Random.Range(1.2f, 1.5f));
         }
     }
 
