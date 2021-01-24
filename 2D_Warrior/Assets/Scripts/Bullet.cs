@@ -19,5 +19,8 @@ public class Bullet : MonoBehaviour
             // 對 Enemy 呼叫 Damage(攻擊力)
             collision.gameObject.GetComponent<Enemy>().Damage(attack);
         }
+
+        // 刪除(此遊戲物件)
+        Destroy(gameObject);
     }
 }
