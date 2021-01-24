@@ -61,8 +61,10 @@ public class Enemy : MonoBehaviour
         hp = 0;
         textHp.text = 0.ToString();
         ani.SetBool("死亡開關", true);
-        // 取得元件<膠囊碰撞>().啟動 = 關閉
-        GetComponent<CapsuleCollider2D>().enabled = false;
+        
+        GetComponent<CapsuleCollider2D>().enabled = false;      // 取得元件<膠囊碰撞>().啟動 = 關閉
+        rig.Sleep();                                            // 剛體.睡著()
+        rig.constraints = RigidbodyConstraints2D.FreezeAll;     // 剛體.約束 = 約束.凍結全部
     }
 
     /// <summary>
@@ -70,6 +72,10 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Move()
     {
+        AnimatorStateInfo asi = ani.GetCurrentAnimatorStateInfo(0);
+
+        if (asi.IsName("骷髏受傷") || asi.IsName("骷髏攻擊")) return;
+
         /** 判斷式寫法
         if (transform.position.x > player.transform.position.x)
         {
@@ -86,10 +92,30 @@ public class Enemy : MonoBehaviour
         // y = X 是否大於 玩家 X ? 是 y 為 180 : 否 y 為 0
         float y = transform.position.x > player.transform.position.x ? 180 : 0;
         transform.eulerAngles = new Vector3(0, y, 0);
+        
+        // 距離 = 二維.距離(A 座標，B 座標)
+        float dis = Vector2.Distance(transform.position, player.transform.position);
 
-        // 剛體.移動座標(座標 + 前方 * 一幀 * 移動速度)
-        rig.MovePosition(transform.position + transform.right * Time.deltaTime * speed);
+        if (dis > rangeAtk)
+        {
+            // 剛體.移動座標(座標 + 前方 * 一幀 * 移動速度)
+            rig.MovePosition(transform.position + transform.right * Time.deltaTime * speed);
+        }
+        else
+        {
+            Attack();
+        }
+
         // 動畫.設定不林值("走路開關"，剛體.加速度.值 > 0)
         ani.SetBool("走路開關", rig.velocity.magnitude > 0);
+    }
+
+    /// <summary>
+    /// 攻擊冷卻與攻擊行為
+    /// </summary>
+    private void Attack()
+    {
+        rig.velocity = Vector3.zero;
+        ani.SetTrigger("攻擊觸發");
     }
 }
