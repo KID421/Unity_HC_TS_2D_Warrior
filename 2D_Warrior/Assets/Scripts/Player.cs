@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -27,14 +28,19 @@ public class Player : MonoBehaviour
     public float radius = 0.3f;
     [Header("鑰匙音效")]
     public AudioClip soundKey;
+    [Header("血量文字")]
+    public Text textHp;
+    [Header("血量圖片")]
+    public Image imgHp;
 
     private AudioSource aud;
     private Rigidbody2D rig;
     private Animator ani;
+    private float hpMax;
     /// <summary>
     /// 取得玩家水平軸向的值
     /// </summary>
-    public float h;
+    private float h;
     #endregion
 
     #region 事件
@@ -49,6 +55,7 @@ public class Player : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animator>();
         aud = GetComponent<AudioSource>();
+        hpMax = hp;
     }
 
     private void Update()
@@ -171,9 +178,13 @@ public class Player : MonoBehaviour
     /// 受傷
     /// </summary>
     /// <param name="getDamge">造成的傷害</param>
-    private void Damage(float getDamge)
+    public void Damage(float getDamge)
     {
+        hp -= getDamge;                 // 遞減
+        textHp.text = hp.ToString();    // 血量文字.文字內容 = 血量.轉字串()
+        imgHp.fillAmount = hp / hpMax;  // 血量圖片.填滿長度 = 目前血量 / 最大血量
 
+        if (hp <= 0) Dead();            // 如果 血量 <= 0 就 死亡
     }
 
     /// <summary>
@@ -181,7 +192,11 @@ public class Player : MonoBehaviour
     /// </summary>
     private void Dead()
     {
-
+        hp = 0;
+        textHp.text = 0.ToString();
+        ani.SetBool("死亡開關", true);
+        enabled = false;
+        transform.Find("槍").gameObject.SetActive(false);
     }
     #endregion
 }

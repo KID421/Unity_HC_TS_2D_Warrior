@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;           // 引用 介面 API
+using UnityEngine.Events;       // 引用 事件 API
+using System.Collections;       // 引用 系統.集合 API - 協同程序需要
 
 // 第一次套用腳本時執行
 // 添加元件(類型(元件)，類型(元件))
@@ -12,18 +14,33 @@ public class Enemy : MonoBehaviour
     public float rangeAtk = 10;
     [Header("攻擊力"), Range(0, 1000)]
     public float attack = 10;
+    [Header("攻擊冷卻"), Range(0, 10)]
+    public float attackCD = 3.5f;
+    [Header("攻擊延遲傳送傷害給玩家時間"), Range(0, 10)]
+    public float attackDelay = 0.7f;
     [Header("血量"), Range(0, 5000)]
     public float hp = 2500;
     [Header("血量文字")]
     public Text textHp;
     [Header("血量圖片")]
     public Image imgHp;
+    [Header("攻擊範圍位移")]
+    public Vector3 offsetAttack;
+    [Header("攻擊範圍大小")]
+    public Vector3 sizeAttack;
+    [Header("死亡事件")]
+    public UnityEvent onDead;
 
     private Animator ani;
     private AudioSource aud;
     private Rigidbody2D rig;
     private float hpMax;
     private Player player;
+    /// <summary>
+    /// 計時器
+    /// </summary>
+    private float timer;
+    private CameraControl2D cam;
 
     private void Start()
     {
@@ -31,12 +48,21 @@ public class Enemy : MonoBehaviour
         aud = GetComponent<AudioSource>();
         rig = GetComponent<Rigidbody2D>();
         hpMax = hp;
-        player = FindObjectOfType<Player>();    // 透過類型尋找物件<類型>() - 不能是重複物件
+        player = FindObjectOfType<Player>();        // 透過類型尋找物件<類型>() - 不能是重複物件
+        cam = FindObjectOfType<CameraControl2D>();
     }
 
     private void Update()
     {
+        if (ani.GetBool("死亡開關")) return;    // 如果 死亡開關 以勾選 就 跳出
         Move();
+    }
+
+    // 僅在編輯器內顯示，發布後看不見
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(0, 1, 0, 0.5f);
+        Gizmos.DrawCube(transform.position + transform.right * offsetAttack.x + transform.up * offsetAttack.y, sizeAttack);
     }
 
     /// <summary>
@@ -58,6 +84,8 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Dead()
     {
+        onDead.Invoke();                                        // 觸發 死亡 事件
+
         hp = 0;
         textHp.text = 0.ToString();
         ani.SetBool("死亡開關", true);
@@ -66,16 +94,12 @@ public class Enemy : MonoBehaviour
         rig.Sleep();                                            // 剛體.睡著()
         rig.constraints = RigidbodyConstraints2D.FreezeAll;     // 剛體.約束 = 約束.凍結全部
     }
-
+    　
     /// <summary>
     /// 追蹤玩家與面向玩家
     /// </summary>
     private void Move()
     {
-        AnimatorStateInfo asi = ani.GetCurrentAnimatorStateInfo(0);
-
-        if (asi.IsName("骷髏受傷") || asi.IsName("骷髏攻擊")) return;
-
         /** 判斷式寫法
         if (transform.position.x > player.transform.position.x)
         {
@@ -116,6 +140,32 @@ public class Enemy : MonoBehaviour
     private void Attack()
     {
         rig.velocity = Vector3.zero;
-        ani.SetTrigger("攻擊觸發");
+
+        if (timer < attackCD)                   // 如果 計時器 < 攻擊冷卻
+        {
+            timer += Time.deltaTime;            // 累加計時器
+        }
+        else                                    // 否則 計時器 >= 攻擊冷卻
+        {
+            ani.SetTrigger("攻擊觸發");          // 攻擊
+            timer = 0;                          // 計時器歸零
+            StartCoroutine(DelaySendDamage());  // 啟動協同程序(協成方法名稱());
+        }
+    }
+
+    // IEnumerator 允許傳回時間
+    /// <summary>
+    /// 延遲傳送傷害
+    /// </summary>
+    private IEnumerator DelaySendDamage()
+    {
+        // 等待延遲時間
+        yield return new WaitForSeconds(attackDelay);
+        // 碰撞物件 = 2D 物理.盒形覆蓋區域(中心點，尺寸，角度，圖層)
+        Collider2D hit = Physics2D.OverlapBox(transform.position + transform.right * offsetAttack.x + transform.up * offsetAttack.y, sizeAttack, 0, 1 << 9);
+        // 如果 碰到物件 存在 玩家.受傷(攻擊力)
+        if (hit) player.Damage(attack);
+        // 啟動(晃動攝影機效果())
+        StartCoroutine(cam.ShakeCamera());
     }
 }
