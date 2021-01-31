@@ -1,6 +1,7 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - BossTrigger
     - CameraControl2D
     - Door
     - Enemy
@@ -13,7 +14,6 @@ ScriptsOnlyBuild:
     - SoundManager
     - TeleportManager
     Unity.2D.Tilemap.Editor.dll:
-    - UnityEditor.Tilemaps.GridBrush
     - UnityEditor.Tilemaps.GridPaintingState
     - UnityEditor.Tilemaps.GridPaletteBrushes
     - UnityEditor.Tilemaps.GridPalettes
@@ -21,14 +21,6 @@ ScriptsOnlyBuild:
     - UnityEditor.Tilemaps.TileDragAndDropManager
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
-    UnityEditor.Graphs.dll:
-    - UnityEditor.Graphs.AnimationBlendTree.Graph
-    - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
-    - UnityEditor.Graphs.AnimationStateMachine.Graph
-    - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
-    - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.Api.CallbacksHolder
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -109,25 +101,27 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12180}
     - Class: 114
-      Script: {instanceID: 12432}
+      Script: {instanceID: 12282}
     - Class: 114
-      Script: {instanceID: 12802}
+      Script: {instanceID: 12434}
     - Class: 114
-      Script: {instanceID: 12904}
+      Script: {instanceID: 12804}
     - Class: 114
-      Script: {instanceID: 13442}
+      Script: {instanceID: 12906}
     - Class: 114
-      Script: {instanceID: 13456}
+      Script: {instanceID: 13052}
     - Class: 114
-      Script: {instanceID: 13504}
+      Script: {instanceID: 13446}
     - Class: 114
-      Script: {instanceID: 13748}
+      Script: {instanceID: 13460}
     - Class: 114
-      Script: {instanceID: 13976}
+      Script: {instanceID: 13508}
     - Class: 114
-      Script: {instanceID: 14016}
+      Script: {instanceID: 13752}
     - Class: 114
-      Script: {instanceID: 21532}
+      Script: {instanceID: 13980}
+    - Class: 114
+      Script: {instanceID: 14020}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -206,15 +200,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12180}
     - Class: 114
-      Script: {instanceID: 12802}
+      Script: {instanceID: 12804}
     - Class: 114
-      Script: {instanceID: 13456}
+      Script: {instanceID: 13460}
     - Class: 114
-      Script: {instanceID: 13748}
+      Script: {instanceID: 13752}
     - Class: 114
-      Script: {instanceID: 13884}
+      Script: {instanceID: 13888}
     - Class: 114
-      Script: {instanceID: 13976}
+      Script: {instanceID: 13980}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -536,6 +530,12 @@ ScriptsOnlyBuild:
     className: Selectable
   - hash:
       serializedVersion: 2
+      Hash: b9383e5cfb60b76cf7f27a138d6e90c7
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: TeleportManager
+  - hash:
+      serializedVersion: 2
       Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -654,6 +654,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.UI.dll
     namespaceName: UnityEngine.UI
     className: InputField
+  - hash:
+      serializedVersion: 2
+      Hash: 42c56e9adfda3a851230052611625936
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BossTrigger
   - hash:
       serializedVersion: 2
       Hash: c9a8b80298a116835b51ba1cf9284367
@@ -924,12 +930,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: b9383e5cfb60b76cf7f27a138d6e90c7
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: TeleportManager
   platform: 20
   scenePathNames:
   - "Assets/\u5834\u666F/\u9078\u55AE.unity"
