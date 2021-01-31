@@ -63,6 +63,9 @@ public class Enemy : MonoBehaviour
     {
         Gizmos.color = new Color(0, 1, 0, 0.5f);
         Gizmos.DrawCube(transform.position + transform.right * offsetAttack.x + transform.up * offsetAttack.y, sizeAttack);
+
+        Gizmos.color = new Color(1, 0, 0, 0.5f);
+        Gizmos.DrawSphere(transform.position, rangeAtk);
     }
 
     /// <summary>
@@ -71,12 +74,14 @@ public class Enemy : MonoBehaviour
     /// <param name="damage">接收傷害值</param>
     public void Damage(float damage)
     {
-        hp -= damage;                   // 遞減
-        ani.SetTrigger("受傷觸發");      // 受傷動畫
-        textHp.text = hp.ToString();    // 血量文字.文字內容 = 血量.轉字串()
-        imgHp.fillAmount = hp / hpMax;  // 血量圖片.填滿長度 = 目前血量 / 最大血量
+        hp -= damage;                                   // 遞減
+        ani.SetTrigger("受傷觸發");                      // 受傷動畫
+        textHp.text = hp.ToString();                    // 血量文字.文字內容 = 血量.轉字串()
+        imgHp.fillAmount = hp / hpMax;                  // 血量圖片.填滿長度 = 目前血量 / 最大血量
 
-        if (hp <= 0) Dead();            // 如果 血量 <= 0 就 死亡
+        if (hp <= hpMax * 0.8f) rangeAtk = 25;          // 血量低於 八成 就進入 第二階段
+
+        if (hp <= 0) Dead();                            // 如果 血量 <= 0 就 死亡
     }
 
     /// <summary>
@@ -100,6 +105,10 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Move()
     {
+        // 如果 動畫是 骷髏攻擊 或 骷髏受傷 就 跳出
+        AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
+        if (info.IsName("骷髏攻擊") || info.IsName("骷髏受傷")) return;
+
         /** 判斷式寫法
         if (transform.position.x > player.transform.position.x)
         {
@@ -130,6 +139,7 @@ public class Enemy : MonoBehaviour
             Attack();
         }
 
+        rig.WakeUp();
         // 動畫.設定不林值("走路開關"，剛體.加速度.值 > 0)
         ani.SetBool("走路開關", rig.velocity.magnitude > 0);
     }

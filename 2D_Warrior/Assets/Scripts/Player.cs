@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class Player : MonoBehaviour
 {
@@ -44,6 +45,9 @@ public class Player : MonoBehaviour
     #endregion
 
     #region 事件
+
+    private SpriteRenderer spr;
+
     private void Start()
     {
         // GetComponent<泛型>()
@@ -55,6 +59,7 @@ public class Player : MonoBehaviour
         rig = GetComponent<Rigidbody2D>();
         ani = GetComponent<Animator>();
         aud = GetComponent<AudioSource>();
+        spr = GetComponent<SpriteRenderer>();
         hpMax = hp;
     }
 
@@ -183,8 +188,26 @@ public class Player : MonoBehaviour
         hp -= getDamge;                 // 遞減
         textHp.text = hp.ToString();    // 血量文字.文字內容 = 血量.轉字串()
         imgHp.fillAmount = hp / hpMax;  // 血量圖片.填滿長度 = 目前血量 / 最大血量
+        StartCoroutine(DamageEffect());
 
         if (hp <= 0) Dead();            // 如果 血量 <= 0 就 死亡
+    }
+
+    /// <summary>
+    /// 受傷效果
+    /// </summary>
+    private IEnumerator DamageEffect()
+    {
+        Color red = new Color(1, 0.2f, 0.2f);               // 受傷顏色
+        float interval = 0.05f;                             // 間隔時間
+
+        for (int i = 0; i < 4; i++)
+        {
+            spr.color = red;                                // 指定紅色
+            yield return new WaitForSeconds(interval);      // 等待
+            spr.color = Color.white;                        // 恢復白色
+            yield return new WaitForSeconds(interval);      // 等待
+        }
     }
 
     /// <summary>
@@ -196,6 +219,7 @@ public class Player : MonoBehaviour
         textHp.text = 0.ToString();
         ani.SetBool("死亡開關", true);
         enabled = false;
+        rig.Sleep();
         transform.Find("槍").gameObject.SetActive(false);
     }
     #endregion
