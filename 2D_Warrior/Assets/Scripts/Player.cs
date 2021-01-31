@@ -33,6 +33,8 @@ public class Player : MonoBehaviour
     public Text textHp;
     [Header("血量圖片")]
     public Image imgHp;
+    [Header("結束畫面")]
+    public GameObject panelGameOver;
 
     private AudioSource aud;
     private Rigidbody2D rig;
@@ -216,10 +218,11 @@ public class Player : MonoBehaviour
     private void Dead()
     {
         hp = 0;
+        panelGameOver.SetActive(true);
         textHp.text = 0.ToString();
         ani.SetBool("死亡開關", true);
         enabled = false;
-        rig.Sleep();
+        rig.velocity = Vector3.zero;
         transform.Find("槍").gameObject.SetActive(false);
     }
     #endregion

@@ -77,14 +77,20 @@ public class Enemy : MonoBehaviour
     /// <param name="damage">接收傷害值</param>
     public void Damage(float damage)
     {
-        hp -= damage;                                   // 遞減
-        ani.SetTrigger("受傷觸發");                      // 受傷動畫
-        textHp.text = hp.ToString();                    // 血量文字.文字內容 = 血量.轉字串()
-        imgHp.fillAmount = hp / hpMax;                  // 血量圖片.填滿長度 = 目前血量 / 最大血量
+        hp -= damage;                                                       // 遞減
 
-        if (hp <= hpMax * 0.8f) rangeAtk = 25;          // 血量低於 八成 就進入 第二階段
+        AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
+        if (!info.IsName("骷髏攻擊")) ani.SetTrigger("受傷觸發");            // 受傷動畫
+        textHp.text = hp.ToString();                                        // 血量文字.文字內容 = 血量.轉字串()
+        imgHp.fillAmount = hp / hpMax;                                      // 血量圖片.填滿長度 = 目前血量 / 最大血量
 
-        if (hp <= 0) Dead();                            // 如果 血量 <= 0 就 死亡
+        if (hp <= hpMax * 0.8f)
+        {
+            isSecond = true;        // 進入 第二階段
+            rangeAtk = 25;          // 血量低於 八成 就進入 第二階段
+        }
+
+        if (hp <= 0) Dead();                                                // 如果 血量 <= 0 就 死亡
     }
 
     /// <summary>
@@ -108,10 +114,6 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        // 如果 動畫是 骷髏攻擊 或 骷髏受傷 就 跳出
-        AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
-        if (info.IsName("骷髏攻擊") || info.IsName("骷髏受傷")) return;
-
         /** 判斷式寫法
         if (transform.position.x > player.transform.position.x)
         {
@@ -134,6 +136,10 @@ public class Enemy : MonoBehaviour
 
         if (dis > rangeAtk)
         {
+            // 如果 動畫是 骷髏攻擊 或 骷髏受傷 就 跳出
+            AnimatorStateInfo info = ani.GetCurrentAnimatorStateInfo(0);
+            if (info.IsName("骷髏攻擊") || info.IsName("骷髏受傷")) return;
+
             // 剛體.移動座標(座標 + 前方 * 一幀 * 移動速度)
             rig.MovePosition(transform.position + transform.right * Time.deltaTime * speed);
         }
@@ -180,5 +186,8 @@ public class Enemy : MonoBehaviour
         if (hit) player.Damage(attack);
         // 啟動(晃動攝影機效果())
         StartCoroutine(cam.ShakeCamera());
+
+        // 如果是第二階段 就播放特效
+        if (isSecond) psSecond.Play();
     }
 }
